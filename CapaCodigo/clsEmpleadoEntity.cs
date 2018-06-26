@@ -8,9 +8,9 @@ namespace CapaCodigo
 {
    public class clsEmpleadoEntity
     {
-        public String idEmpleado { get; set; }
+        public int idEmpleado { get; set; }
         public String nombre { get; set; }
-
+        public int idEmpresa { get; set; }
         public String  apellido{ get; set; }
         public String  email{ get; set; }
         public String  ususario{ get; set; }

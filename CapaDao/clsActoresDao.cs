@@ -9,7 +9,7 @@ using CapaCodigo;
 using CapaEntidades;
 namespace CapaDao
 {
-    class clsActoresDao:clsConexion
+    public class clsActoresDao:clsConexion
     {
         //public void InsertarActores(clsActores act)
         //{

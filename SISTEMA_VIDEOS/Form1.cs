@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
+using System.Drawing.Imaging;
 using CapaCodigo;
 
 namespace SISTEMA_VIDEOS
@@ -27,13 +29,14 @@ namespace SISTEMA_VIDEOS
             txtContra.Visible = false;
             button1.Visible = false;
         }
-        int x = 0;
         clsEmpleadoEntity oEmpleado = new clsEmpleadoEntity();
         clsEmpleadosDao oEmpleadoDao = new clsEmpleadosDao();
         private void LoginUsu()
         {
             oEmpleado.ususario = this.txtUsu.Text;
-            if (oEmpleadoDao.VerificarUsuario(oEmpleado,x) == true)
+            DataTable dt = new DataTable();
+            dt = oEmpleadoDao.MostrarFoto();
+            if (oEmpleadoDao.VerificarUsuario(oEmpleado) == true)
             {
                 label4.Visible = true;
 
@@ -48,8 +51,10 @@ namespace SISTEMA_VIDEOS
                 txtContra.Visible = true;
                 button1.Visible = true;
                 label4.Text = "Bienvenido Usuario De Correo :   " + txtUsu.Text;
-                rdbcon.Visible = false;
-                rdbSin.Visible = false;
+                pictureBox1.Visible = true;
+                Byte[] img = (Byte[])dt.Rows[0][8];
+                MemoryStream ms = new MemoryStream(img);
+                pictureBox1.Image = Image.FromStream(ms);
             }
             else
             {
@@ -69,31 +74,20 @@ namespace SISTEMA_VIDEOS
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            rdbcon.Checked = true;
+
         }
 
         private void button2_Click_1(object sender, EventArgs e)
         {
             LoginUsu();
-            CheckedButtons();
             
-        }
-        private void CheckedButtons()
-        {
-            if (rdbcon.Checked)
-            {
-                x = 1;
-            }
-            else
-            {
-                x = 2;
-            }
         }
         private void button1_Click_1(object sender, EventArgs e)
         {
             oEmpleado.clave = this.txtContra.Text;
-            if (oEmpleadoDao.VerificarContra(oEmpleado,x) == true)
+            if (oEmpleadoDao.VerificarContra(oEmpleado) == true)
             {
+                lblWrongUser.Visible = false;
                 MessageBox.Show("BIENVENIDOS AL SISTEMA:... " + txtUsu.Text);
                 //mostrar el formulario menú o dni(padre)
                 Form2 menu = new Form2();
@@ -103,7 +97,8 @@ namespace SISTEMA_VIDEOS
             }
             else
             {
-                MessageBox.Show("Contraseña Incorrecta ");
+                lblWrongUser.Visible = true;
+                lblWrongUser.Text = "Contraseña incorrecta";
                 this.txtUsu.Clear();
                 this.txtContra.Clear();
                 this.txtUsu.Focus();
