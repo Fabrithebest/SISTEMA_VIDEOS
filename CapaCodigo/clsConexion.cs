@@ -18,7 +18,7 @@ namespace CapaCodigo
             {
                 case 1:
                     sql = "Data Source=.;Initial Catalog=SISTEMA_VIDEOS;Integrated Security=True";
-                    SqlConnection cnx = new SqlConnection(sql);
+                    cnx= new SqlConnection
                     break;
                 case 2:
                     sql = "Data Source = SQL5028.site4now.net; User ID = DB_A3CDDC_SISTEMAVideos_admin; Password = Fa8R12i0;";
